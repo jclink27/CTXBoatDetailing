@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTX Boat Detailing | Lake Travis, Lake Austin, Lake LBJ</title>
+    <meta name="description" content="Premium boat detailing for Lake Travis, Lake Austin, and Lake LBJ. Full detail at $20/ft and basic wash at $16/ft.">
+    <style>
+      :root {
+        --navy: #062a47;
+        --blue: #0e6ea8;
+        --foam: #f5fbff;
+        --white: #ffffff;
+        --mist: #dcecf5;
+        --ink: #123047;
+        --muted: #5b7181;
+        --teak: #c8914b;
+        --coral: #f07f61;
+        --shadow: 0 24px 70px rgba(6, 42, 71, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--foam);
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .topbar {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px clamp(20px, 4vw, 56px);
+        color: var(--white);
+        background: linear-gradient(180deg, rgba(6, 42, 71, 0.78), rgba(6, 42, 71, 0));
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border: 2px solid rgba(255, 255, 255, 0.75);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .mark svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 3vw, 34px);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border: 0;
+        border-radius: 6px;
+        color: var(--white);
+        background: var(--blue);
+        box-shadow: 0 14px 30px rgba(14, 110, 168, 0.25);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .button.secondary {
+        color: var(--navy);
+        background: var(--white);
+        box-shadow: none;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 88vh;
+        display: grid;
+        align-items: end;
+        padding: 120px clamp(20px, 5vw, 70px) 58px;
+        color: var(--white);
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(4, 29, 49, 0.85), rgba(4, 29, 49, 0.56) 40%, rgba(4, 29, 49, 0.08) 75%),
+          linear-gradient(180deg, rgba(4, 29, 49, 0.1), rgba(4, 29, 49, 0.38));
+        z-index: 1;
+      }
+
+      .hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-content,
+      .rate-strip {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-content {
+        max-width: 740px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 20px;
+        color: #e9f8ff;
+        font-size: 0.84rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 44px;
+        height: 2px;
+        background: var(--teak);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 690px;
+        margin-bottom: 20px;
+        font-size: clamp(3.1rem, 8vw, 6.8rem);
+        line-height: 0.92;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+        margin-bottom: 30px;
+        color: #edf9ff;
+        font-size: clamp(1.05rem, 2vw, 1.28rem);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .rate-strip {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1px;
+        margin-top: 42px;
+        max-width: 930px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(12px);
+      }
+
+      .rate-strip div {
+        min-height: 92px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .rate-strip strong {
+        display: block;
+        font-size: clamp(1.3rem, 3vw, 2rem);
+        line-height: 1;
+      }
+
+      .rate-strip span {
+        display: block;
+        margin-top: 8px;
+        color: #e6f8ff;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: clamp(58px, 8vw, 96px) clamp(20px, 5vw, 70px);
+      }
+
+      .section-inner {
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 0.88fr) minmax(280px, 0.62fr);
+        gap: 36px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        color: var(--navy);
+        font-size: clamp(2rem, 5vw, 4.3rem);
+        line-height: 0.98;
+      }
+
+      .section-heading p,
+      .wide-copy {
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .lakes,
+      .services {
+        display: grid;
+        gap: 18px;
+      }
+
+      .lakes {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .services {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .lake-card,
+      .service-card,
+      .quote-card {
+        border: 1px solid var(--mist);
+        border-radius: 8px;
+        background: var(--white);
+        box-shadow: 0 14px 40px rgba(6, 42, 71, 0.06);
+      }
+
+      .lake-card {
+        min-height: 230px;
+        padding: 24px;
+      }
+
+      .lake-card h3,
+      .service-card h3 {
+        color: var(--navy);
+      }
+
+      .lake-card p,
+      .service-card p {
+        color: var(--muted);
+      }
+
+      .tag {
+        display: inline-flex;
+        margin-bottom: 20px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        color: var(--blue);
+        background: #e5f5fd;
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .pricing-band {
+        color: var(--white);
+        background:
+          linear-gradient(120deg, rgba(6, 42, 71, 0.96), rgba(14, 110, 168, 0.92)),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.28), transparent 30%);
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.55fr);
+        gap: 36px;
+        align-items: center;
+      }
+
+      .pricing-band h2 {
+        color: var(--white);
+      }
+
+      .pricing-band p {
+        color: #dff4ff;
+      }
+
+      .included {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .included div {
+        min-height: 72px;
+        padding: 16px;
+        border-radius: 7px;
+        color: var(--navy);
+        background: rgba(255, 255, 255, 0.9);
+        font-weight: 800;
+      }
+
+      .price-box {
+        padding: clamp(26px, 5vw, 42px);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.13);
+        box-shadow: var(--shadow);
+      }
+
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .price strong {
+        font-size: clamp(4rem, 10vw, 7rem);
+        line-height: 0.88;
+      }
+
+      .price span {
+        font-size: 1.45rem;
+        font-weight: 900;
+      }
+
+      .compact-price {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+      }
+
+      .compact-price strong {
+        font-size: clamp(2.8rem, 7vw, 4.4rem);
+      }
+
+      .service-card {
+        min-height: 210px;
+        padding: 22px;
+      }
+
+      .icon {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        color: var(--white);
+        background: var(--navy);
+      }
+
+      .icon svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .quote-section {
+        background: linear-gradient(180deg, var(--foam), #eaf6fb);
+      }
+
+      .quote-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.72fr) minmax(330px, 0.58fr);
+        gap: 34px;
+        align-items: start;
+      }
+
+      .quote-copy h2 {
+        margin-bottom: 20px;
+      }
+
+      .proof-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 30px;
+      }
+
+      .proof {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        color: var(--muted);
+      }
+
+      .check {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        color: var(--white);
+        background: var(--coral);
+        font-weight: 900;
+      }
+
+      .quote-card {
+        padding: clamp(22px, 4vw, 32px);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--navy);
+        font-size: 0.86rem;
+        font-weight: 900;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-height: 48px;
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border: 1px solid #c8dce8;
+        border-radius: 6px;
+        color: var(--ink);
+        background: var(--white);
+        font: inherit;
+      }
+
+      .estimate {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 4px 0 20px;
+        padding: 18px;
+        border-radius: 8px;
+        background: #edf8fd;
+      }
+
+      .estimate span {
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .estimate strong {
+        color: var(--navy);
+        font-size: 1.8rem;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 30px clamp(20px, 5vw, 70px);
+        color: #d4e9f4;
+        background: var(--navy);
+      }
+
+      footer strong {
+        color: var(--white);
+      }
+
+      @media (max-width: 1000px) {
+        .services {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .topbar {
+          position: absolute;
+        }
+
+        .nav {
+          display: none;
+        }
+
+        .rate-strip,
+        .section-heading,
+        .pricing-grid,
+        .quote-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .lakes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .hero-actions,
+        footer {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .rate-strip,
+        .lakes,
+        .services,
+        .included {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar" aria-label="Site header">
+      <a class="brand" href="#top" aria-label="CTX Boat Detailing home">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 15h16l-2.8 4H7.4L4 15Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+            <path d="M8 15V6l7 4-7 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        CTX Boat Detailing
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#areas">Lake Areas</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#services">Details</a>
+        <a href="#quote">Quote</a>
+        <a href="tel:5127968375">512-796-8375</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="top">
+      <img src="assets/lake-marina-hero.png" alt="Freshly detailed white boat at a sunny marina on a blue lake">
+      <div class="hero-content">
+        <p class="eyebrow">Boat detailing across Central Texas lakes</p>
+        <h1>Lake-ready boat detailing.</h1>
+        <p class="hero-copy">
+          Premium full interior and exterior detailing for Lake Travis, Lake Austin, and Lake LBJ boats,
+          finished with a clean blue-and-white marine polish.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#quote">Get a Fast Quote</a>
+          <a class="button secondary" href="#quote">Contact</a>
+          <a class="button secondary" href="#pricing">$20/ft Full Detail</a>
+        </div>
+      </div>
+      <div class="rate-strip" aria-label="Service highlights">
+        <div>
+          <strong>$20/ft</strong>
+          <span>Full interior and exterior</span>
+        </div>
+        <div>
+          <strong>$16/ft</strong>
+          <span>Basic wash and wipe-down</span>
+        </div>
+        <div>
+          <strong>3 Lakes</strong>
+          <span>Travis, Austin, LBJ</span>
+        </div>
+        <div>
+          <strong>Dockside</strong>
+          <span>Marina-friendly scheduling</span>
+        </div>
+        <div>
+          <strong>Clean</strong>
+          <span>Premium lake-life finish</span>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="section" id="areas">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2>Built for lake owners, not driveway boats.</h2>
+            <p>
+              Every service is shaped around lake use: sunscreen residue, water spots, dock dust,
+              vinyl wear, weekend traffic, and quick turnarounds before the next launch.
+            </p>
+          </div>
+          <div class="lakes">
+            <article class="lake-card">
+              <span class="tag">Primary Area</span>
+              <h3>Lake Travis</h3>
+              <p>Marina, dock, and storage-lot detailing for runabouts, surf boats, pontoons, and cruisers.</p>
+            </article>
+            <article class="lake-card">
+              <span class="tag">Concierge Ready</span>
+              <h3>Lake Austin</h3>
+              <p>Clean, discreet service for boats that need to look sharp between lake days and evening cruises.</p>
+            </article>
+            <article class="lake-card">
+              <span class="tag">Hill Country</span>
+              <h3>Lake LBJ</h3>
+              <p>Full-service detailing for vacation homes, slips, and seasonal refreshes before guests arrive.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pricing-band" id="pricing">
+        <div class="section-inner pricing-grid">
+          <div>
+            <p class="eyebrow">Simple lake-detail pricing</p>
+            <h2>Choose the refresh that fits the next lake day.</h2>
+            <p class="wide-copy">
+              Full interior and exterior boat detailing is priced at $20/ft. Basic wash service
+              is priced at $16/ft for an exterior wash and shine plus an interior wipe-down.
+            </p>
+            <div class="included">
+              <div>Hull wash and water-spot cleanup</div>
+              <div>Interior wipe-down and vinyl care</div>
+              <div>Compartments, cupholders, and helm reset</div>
+              <div>Final shine and lake-day inspection</div>
+            </div>
+          </div>
+          <aside class="price-box" aria-label="Price summary">
+            <div class="price"><strong>$20</strong><span>/ft</span></div>
+            <p>
+              Full interior/exterior detail. Larger corrections, severe oxidation, and specialty requests
+              can be scoped after a quick look at the boat.
+            </p>
+            <div class="price compact-price"><strong>$16</strong><span>/ft</span></div>
+            <p>
+              Basic wash includes an exterior wash and shine with a clean interior wipe-down.
+            </p>
+            <a class="button secondary" href="#quote">Estimate My Boat</a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2>Premium where it counts. Clean everywhere else.</h2>
+            <p>
+              The look is crisp and marine-grade: bright whites, deep blues, polished hardware,
+              refreshed vinyl, and surfaces that feel ready for guests.
+            </p>
+          </div>
+          <div class="services">
+            <article class="service-card">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13c4-6 10-6 14 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M4 18c2 1.2 4 1.2 6 0s4-1.2 6 0 4 1.2 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span>
+              <h3>Exterior Refresh</h3>
+              <p>Wash, dry, brightwork attention, hull shine, waterline cleanup, and dockside presentation.</p>
+            </article>
+            <article class="service-card">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 19V9a6 6 0 0 1 12 0v10" stroke="currentColor" stroke-width="2"></path><path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M9 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span>
+              <h3>Interior Reset</h3>
+              <p>Seats, helm, storage spaces, cupholders, mats, and high-touch surfaces cleaned and conditioned.</p>
+            </article>
+            <article class="service-card">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 5h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M6 9h12l-1.5 9h-9L6 9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><path d="M9 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span>
+              <h3>Basic Wash</h3>
+              <p>Exterior wash and shine with an interior wipe-down, priced at $16/ft.</p>
+            </article>
+            <article class="service-card">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M5 8h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path><path d="M7 8l-3 7h6L7 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><path d="M17 8l-3 7h6l-3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg></span>
+              <h3>Lake-Smart Care</h3>
+              <p>Products and process selected for sun, lake water, marina exposure, and regular weekend use.</p>
+            </article>
+            <article class="service-card">
+              <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 4h8l2 4-6 12L6 8l2-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><path d="M6 8h12" stroke="currentColor" stroke-width="2"></path></svg></span>
+              <h3>Premium Finish</h3>
+              <p>A sharp, guest-ready final pass that makes the boat feel cared for without overcomplicating it.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section quote-section" id="quote">
+        <div class="section-inner quote-layout">
+          <div class="quote-copy">
+            <p class="eyebrow">Book the clean boat day</p>
+            <h2>Tell us the lake and the measurement.</h2>
+            <p class="wide-copy">
+              A quick quote starts with your service area, package, and measurement. Contact
+              <a href="tel:5127968375">512-796-8375</a> or
+              <a href="mailto:ctxboatdetailing@gmail.com">ctxboatdetailing@gmail.com</a> to get on the schedule.
+            </p>
+            <div class="proof-list">
+              <div class="proof"><span class="check">✓</span><span>Service areas focused on Lake Travis, Lake Austin, and Lake LBJ.</span></div>
+              <div class="proof"><span class="check">✓</span><span>Clear full-detail and basic wash pricing before add-ons or special correction work.</span></div>
+            </div>
+          </div>
+
+          <form class="quote-card" id="quote-form">
+            <label for="package">Service package</label>
+            <select id="package" name="package">
+              <option value="full">Full interior/exterior detail - $20/ft</option>
+              <option value="basic">Basic wash - $16/ft</option>
+            </select>
+
+            <label for="lake">Lake service area</label>
+            <select id="lake" name="lake">
+              <option>Lake Travis</option>
+              <option>Lake Austin</option>
+              <option>Lake LBJ</option>
+            </select>
+
+            <label for="boat">Boat type</label>
+            <input id="boat" name="boat" placeholder="Pontoon, surf boat, runabout, cruiser" required>
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+            <label for="measure" id="measure-label">Boat length in feet</label>
+            <input id="measure" name="measure" type="number" min="10" max="1000" value="24">
+
+            <div class="estimate" aria-live="polite">
+              <span id="estimate-label">Estimated full detail</span>
+              <strong id="estimate">$480</strong>
+            </div>
+
+            <button class="button" type="submit">Request Quote</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>CTX Boat Detailing</strong>
+      <span>Lake Travis · Lake Austin · Lake LBJ · Contact 512-796-8375</span>
+    </footer>
+
+    <script>
+      const packageInput = document.querySelector("#package");
+      const quoteForm = document.querySelector("#quote-form");
+      const lakeInput = document.querySelector("#lake");
+      const boatInput = document.querySelector("#boat");
+      const emailInput = document.querySelector("#email");
+      const measureInput = document.querySelector("#measure");
+      const measureLabel = document.querySelector("#measure-label");
+      const estimate = document.querySelector("#estimate");
+      const estimateLabel = document.querySelector("#estimate-label");
+
+      function updateEstimate() {
+        const measurement = Math.max(0, Number(measureInput.value) || 0);
+        const isBasic = packageInput.value === "basic";
+        const rate = isBasic ? 16 : 20;
+
+        measureLabel.textContent = isBasic ? "Boat area in feet" : "Boat length in feet";
+        estimateLabel.textContent = isBasic ? "Estimated basic wash" : "Estimated full detail";
+        estimate.textContent = `$${(measurement * rate).toLocaleString()}`;
+      }
+
+      packageInput.addEventListener("change", updateEstimate);
+      measureInput.addEventListener("input", updateEstimate);
+      quoteForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (!quoteForm.reportValidity()) {
+          return;
+        }
+
+        const isBasic = packageInput.value === "basic";
+        const service = isBasic ? "Basic wash - $16/ft" : "Full interior/exterior detail - $20/ft";
+        const measurementLabel = isBasic ? "Boat area in feet" : "Boat length in feet";
+        const subject = "Boat Detailing Quote Request";
+        const body = [
+          "New boat detailing quote request:",
+          "",
+          `Service package: ${service}`,
+          `Lake service area: ${lakeInput.value}`,
+          `Boat type: ${boatInput.value}`,
+          `Customer email: ${emailInput.value}`,
+          `${measurementLabel}: ${measureInput.value}`,
+          `Estimate: ${estimate.textContent}`
+        ].join("\n");
+
+        window.location.href = `mailto:ctxboatdetailing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+      updateEstimate();
+    </script>
+  </body>
+</html>
